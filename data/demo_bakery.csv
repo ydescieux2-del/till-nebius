@@ -1,0 +1,307 @@
+date,vendor,category,amount,memo
+2026-04-01,Card sales deposit,Sales,998.82,
+2026-04-01,Maple St Properties,Rent,-4200,monthly rent
+2026-04-02,Card sales deposit,Sales,843.79,
+2026-04-02,Valley Dairy,Ingredients,-449.14,weekly dairy
+2026-04-03,Card sales deposit,Sales,1485.4,
+2026-04-03,Payroll,Payroll,-6827.31,"biweekly payroll, 5 staff"
+2026-04-04,Card sales deposit,Sales,1290.94,
+2026-04-04,Corner Hardware,Supplies,-134.72,
+2026-04-05,Card sales deposit,Sales,1481.05,
+2026-04-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-04-07,Card sales deposit,Sales,1056.78,
+2026-04-07,Golden Mill Flour Co,Ingredients,-889.78,weekly flour and sugar
+2026-04-08,Card sales deposit,Sales,881.85,
+2026-04-08,City Power and Water,Utilities,-645.43,monthly utilities
+2026-04-09,Card sales deposit,Sales,870.58,
+2026-04-09,Valley Dairy,Ingredients,-385.39,weekly dairy
+2026-04-10,Card sales deposit,Sales,1498.95,
+2026-04-11,Card sales deposit,Sales,1443.68,
+2026-04-12,Bookkeeper Cloud,Software,-60,
+2026-04-12,Card sales deposit,Sales,1361.32,
+2026-04-12,ShiftSlot Scheduling,Software,-45,
+2026-04-12,TillPOS,Software,-89,
+2026-04-14,Card sales deposit,Sales,970.1,
+2026-04-14,Golden Mill Flour Co,Ingredients,-920.23,weekly flour and sugar
+2026-04-15,Card sales deposit,Sales,882.97,
+2026-04-15,Harbor Mutual Insurance,Insurance,-2340,quarterly policy
+2026-04-16,Card sales deposit,Sales,868.69,
+2026-04-16,Valley Dairy,Ingredients,-417.98,weekly dairy
+2026-04-17,Card sales deposit,Sales,1237.92,
+2026-04-17,Payroll,Payroll,-6672.32,"biweekly payroll, 5 staff"
+2026-04-18,Card sales deposit,Sales,1292.94,
+2026-04-18,Corner Hardware,Supplies,-57.59,
+2026-04-19,Card sales deposit,Sales,1504.25,
+2026-04-20,Card processor fees,Fees,-785.77,
+2026-04-21,Card sales deposit,Sales,872.43,
+2026-04-21,Golden Mill Flour Co,Ingredients,-968.65,weekly flour and sugar
+2026-04-22,Card sales deposit,Sales,1046.4,
+2026-04-23,Card sales deposit,Sales,1067.02,
+2026-04-23,Valley Dairy,Ingredients,-388.09,weekly dairy
+2026-04-24,Card sales deposit,Sales,1545.04,
+2026-04-25,Card sales deposit,Sales,1214.33,
+2026-04-26,Card sales deposit,Sales,1558.03,
+2026-04-28,Card sales deposit,Sales,999.16,
+2026-04-28,Golden Mill Flour Co,Ingredients,-951.02,weekly flour and sugar
+2026-04-29,Card sales deposit,Sales,896.42,
+2026-04-30,Card sales deposit,Sales,899.85,
+2026-04-30,Valley Dairy,Ingredients,-442.21,weekly dairy
+2026-05-01,Card sales deposit,Sales,1210.62,
+2026-05-01,Maple St Properties,Rent,-4200,monthly rent
+2026-05-01,Payroll,Payroll,-6711.17,"biweekly payroll, 5 staff"
+2026-05-02,Card sales deposit,Sales,1542.71,
+2026-05-03,Card sales deposit,Sales,1158.01,
+2026-05-05,Card sales deposit,Sales,1073.41,
+2026-05-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-05-05,Golden Mill Flour Co,Ingredients,-863.01,weekly flour and sugar
+2026-05-06,Card sales deposit,Sales,819.36,
+2026-05-07,Card sales deposit,Sales,946.1,
+2026-05-07,Valley Dairy,Ingredients,-449.67,weekly dairy
+2026-05-08,Card sales deposit,Sales,1356.21,
+2026-05-08,City Power and Water,Utilities,-617.83,monthly utilities
+2026-05-09,Card sales deposit,Sales,1302.31,
+2026-05-09,Corner Hardware,Supplies,-60.31,
+2026-05-10,Card sales deposit,Sales,1391.01,
+2026-05-12,Bookkeeper Cloud,Software,-60,
+2026-05-12,Card sales deposit,Sales,1062.02,
+2026-05-12,Golden Mill Flour Co,Ingredients,-822.79,weekly flour and sugar
+2026-05-12,ShiftSlot Scheduling,Software,-45,
+2026-05-12,TillPOS,Software,-89,
+2026-05-13,Card sales deposit,Sales,797.53,
+2026-05-14,Card sales deposit,Sales,1003.51,
+2026-05-14,Valley Dairy,Ingredients,-399.3,weekly dairy
+2026-05-15,Card sales deposit,Sales,1284.89,
+2026-05-15,Payroll,Payroll,-6718.04,"biweekly payroll, 5 staff"
+2026-05-16,Card sales deposit,Sales,1560.63,
+2026-05-16,Corner Hardware,Supplies,-78.48,
+2026-05-17,Card sales deposit,Sales,1195.16,
+2026-05-19,Card sales deposit,Sales,998.82,
+2026-05-19,Golden Mill Flour Co,Ingredients,-913.8,weekly flour and sugar
+2026-05-20,Card processor fees,Fees,-865.66,
+2026-05-20,Card sales deposit,Sales,862.27,
+2026-05-21,Card sales deposit,Sales,896.88,
+2026-05-21,Valley Dairy,Ingredients,-427.82,weekly dairy
+2026-05-22,Card sales deposit,Sales,1262.08,
+2026-05-23,Card sales deposit,Sales,1217.26,
+2026-05-24,Card sales deposit,Sales,1245.03,
+2026-05-26,Card sales deposit,Sales,801.21,
+2026-05-26,Golden Mill Flour Co,Ingredients,-892.75,weekly flour and sugar
+2026-05-27,Card sales deposit,Sales,959.68,
+2026-05-28,Card sales deposit,Sales,927.14,
+2026-05-28,Valley Dairy,Ingredients,-435.1,weekly dairy
+2026-05-29,Card sales deposit,Sales,1427.54,
+2026-05-29,Payroll,Payroll,-6860.34,"biweekly payroll, 5 staff"
+2026-05-30,Card sales deposit,Sales,1159.26,
+2026-05-31,Card sales deposit,Sales,1562.0,
+2026-06-01,Maple St Properties,Rent,-4200,monthly rent
+2026-06-02,Card sales deposit,Sales,1016.76,
+2026-06-02,Golden Mill Flour Co,Ingredients,-862.34,weekly flour and sugar
+2026-06-03,Card sales deposit,Sales,1029.78,
+2026-06-04,Card sales deposit,Sales,1020.09,
+2026-06-04,Valley Dairy,Ingredients,-386.87,weekly dairy
+2026-06-05,Card sales deposit,Sales,1476.55,
+2026-06-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-06-06,Card sales deposit,Sales,1356.8,
+2026-06-06,Corner Hardware,Supplies,-146.0,
+2026-06-07,Card sales deposit,Sales,1559.24,
+2026-06-08,City Power and Water,Utilities,-643.34,monthly utilities
+2026-06-09,Card sales deposit,Sales,874.85,
+2026-06-09,Golden Mill Flour Co,Ingredients,-898.23,weekly flour and sugar
+2026-06-10,Card sales deposit,Sales,906.08,
+2026-06-11,Card sales deposit,Sales,860.47,
+2026-06-11,Valley Dairy,Ingredients,-467.02,weekly dairy
+2026-06-12,Bookkeeper Cloud,Software,-60,
+2026-06-12,Card sales deposit,Sales,1282.6,
+2026-06-12,Payroll,Payroll,-6767.39,"biweekly payroll, 5 staff"
+2026-06-12,ShiftSlot Scheduling,Software,-45,
+2026-06-12,TillPOS,Software,-89,
+2026-06-13,Card sales deposit,Sales,1199.29,
+2026-06-13,Corner Hardware,Supplies,-144.84,
+2026-06-14,Card sales deposit,Sales,1494.64,
+2026-06-16,Card sales deposit,Sales,843.14,
+2026-06-16,Golden Mill Flour Co,Ingredients,-943.31,weekly flour and sugar
+2026-06-17,Card sales deposit,Sales,903.36,
+2026-06-18,Card sales deposit,Sales,1074.31,
+2026-06-18,Valley Dairy,Ingredients,-456.54,weekly dairy
+2026-06-19,Card sales deposit,Sales,1287.32,
+2026-06-20,Card processor fees,Fees,-808.28,
+2026-06-20,Card sales deposit,Sales,1269.01,
+2026-06-20,Corner Hardware,Supplies,-53.18,
+2026-06-21,Card sales deposit,Sales,1381.34,
+2026-06-23,Card sales deposit,Sales,903.13,
+2026-06-23,Golden Mill Flour Co,Ingredients,-828.23,weekly flour and sugar
+2026-06-24,Card sales deposit,Sales,1014.58,
+2026-06-25,Card sales deposit,Sales,842.94,
+2026-06-25,Valley Dairy,Ingredients,-417.82,weekly dairy
+2026-06-26,Card sales deposit,Sales,1522.02,
+2026-06-26,Payroll,Payroll,-6740.45,"biweekly payroll, 5 staff"
+2026-06-27,Card sales deposit,Sales,1246.5,
+2026-06-27,Corner Hardware,Supplies,-192.7,
+2026-06-28,Card sales deposit,Sales,1197.36,
+2026-06-30,Card sales deposit,Sales,862.91,
+2026-06-30,Golden Mill Flour Co,Ingredients,-893.9,weekly flour and sugar
+2026-07-01,Card sales deposit,Sales,762.47,
+2026-07-01,Maple St Properties,Rent,-4200,monthly rent
+2026-07-02,Card sales deposit,Sales,949.67,
+2026-07-02,Valley Dairy,Ingredients,-432.48,weekly dairy
+2026-07-03,Card sales deposit,Sales,1113.0,
+2026-07-04,Card sales deposit,Sales,1081.89,
+2026-07-05,Card sales deposit,Sales,1266.75,
+2026-07-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-07-07,Card sales deposit,Sales,926.94,
+2026-07-07,Golden Mill Flour Co,Ingredients,-926.95,weekly flour and sugar
+2026-07-08,Card sales deposit,Sales,832.37,
+2026-07-08,City Power and Water,Utilities,-657.5,monthly utilities
+2026-07-09,Card sales deposit,Sales,902.53,
+2026-07-09,Valley Dairy,Ingredients,-462.58,weekly dairy
+2026-07-10,Card sales deposit,Sales,1075.53,
+2026-07-10,Payroll,Payroll,-6753.29,"biweekly payroll, 5 staff"
+2026-07-11,Card sales deposit,Sales,1247.42,
+2026-07-11,Corner Hardware,Supplies,-97.95,
+2026-07-12,Bookkeeper Cloud,Software,-60,
+2026-07-12,Card sales deposit,Sales,1271.97,
+2026-07-12,ShiftSlot Scheduling,Software,-45,
+2026-07-12,TillPOS,Software,-89,
+2026-07-14,Card sales deposit,Sales,765.99,
+2026-07-14,Golden Mill Flour Co,Ingredients,-919.56,weekly flour and sugar
+2026-07-15,Card sales deposit,Sales,744.47,
+2026-07-15,Harbor Mutual Insurance,Insurance,-2340,quarterly policy
+2026-07-16,Card sales deposit,Sales,755.0,
+2026-07-16,Valley Dairy,Ingredients,-408.78,weekly dairy
+2026-07-17,Card sales deposit,Sales,1239.34,
+2026-07-18,Card sales deposit,Sales,1077.12,
+2026-07-18,Corner Hardware,Supplies,-174.3,
+2026-07-19,Card sales deposit,Sales,1285.7,
+2026-07-20,Card processor fees,Fees,-871.03,
+2026-07-21,Card sales deposit,Sales,855.46,
+2026-07-21,Golden Mill Flour Co,Ingredients,-826.69,weekly flour and sugar
+2026-07-22,Card sales deposit,Sales,826.56,
+2026-07-23,Card sales deposit,Sales,845.18,
+2026-07-23,Valley Dairy,Ingredients,-417.19,weekly dairy
+2026-07-24,Card sales deposit,Sales,1403.95,
+2026-07-24,Payroll,Payroll,-6840.59,"biweekly payroll, 5 staff"
+2026-07-25,Card sales deposit,Sales,1106.45,
+2026-07-26,Card sales deposit,Sales,1226.7,
+2026-07-28,Card sales deposit,Sales,816.97,
+2026-07-28,Golden Mill Flour Co,Ingredients,-918.63,weekly flour and sugar
+2026-07-29,Card sales deposit,Sales,828.15,
+2026-07-30,Card sales deposit,Sales,792.34,
+2026-07-30,Valley Dairy,Ingredients,-404.49,weekly dairy
+2026-07-31,Card sales deposit,Sales,1103.48,
+2026-08-01,Card sales deposit,Sales,1232.46,
+2026-08-01,Maple St Properties,Rent,-4200,monthly rent
+2026-08-02,Card sales deposit,Sales,1078.41,
+2026-08-04,Card sales deposit,Sales,962.23,
+2026-08-04,Golden Mill Flour Co,Ingredients,-914.04,weekly flour and sugar
+2026-08-05,Card sales deposit,Sales,871.77,
+2026-08-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-08-06,Card sales deposit,Sales,802.51,
+2026-08-06,Valley Dairy,Ingredients,-462.97,weekly dairy
+2026-08-07,Card sales deposit,Sales,1188.06,
+2026-08-07,Payroll,Payroll,-6749.45,"biweekly payroll, 5 staff"
+2026-08-08,Card sales deposit,Sales,1383.58,
+2026-08-08,City Power and Water,Utilities,-663.98,monthly utilities
+2026-08-09,Card sales deposit,Sales,1390.95,
+2026-08-11,Card sales deposit,Sales,716.26,
+2026-08-11,Golden Mill Flour Co,Ingredients,-950.12,weekly flour and sugar
+2026-08-12,Bookkeeper Cloud,Software,-60,
+2026-08-12,Card sales deposit,Sales,768.18,
+2026-08-12,ShiftSlot Scheduling,Software,-45,
+2026-08-12,TillPOS,Software,-89,
+2026-08-13,Card sales deposit,Sales,924.46,
+2026-08-13,Valley Dairy,Ingredients,-444.69,weekly dairy
+2026-08-14,Card sales deposit,Sales,1284.79,
+2026-08-15,Card sales deposit,Sales,1282.15,
+2026-08-16,Card sales deposit,Sales,1193.22,
+2026-08-18,Card sales deposit,Sales,848.41,
+2026-08-18,Golden Mill Flour Co,Ingredients,-977.15,weekly flour and sugar
+2026-08-19,Card sales deposit,Sales,949.12,
+2026-08-20,Card processor fees,Fees,-859.61,
+2026-08-20,Card sales deposit,Sales,952.29,
+2026-08-20,Valley Dairy,Ingredients,-382.5,weekly dairy
+2026-08-21,Card sales deposit,Sales,1204.15,
+2026-08-21,Payroll,Payroll,-6692.56,"biweekly payroll, 5 staff"
+2026-08-22,Card sales deposit,Sales,1231.42,
+2026-08-22,Corner Hardware,Supplies,-62.56,
+2026-08-23,Card sales deposit,Sales,1292.29,
+2026-08-25,Card sales deposit,Sales,862.03,
+2026-08-25,Golden Mill Flour Co,Ingredients,-839.12,weekly flour and sugar
+2026-08-26,Card sales deposit,Sales,937.63,
+2026-08-27,Card sales deposit,Sales,744.05,
+2026-08-27,Valley Dairy,Ingredients,-428.56,weekly dairy
+2026-08-28,Card sales deposit,Sales,1106.95,
+2026-08-29,Card sales deposit,Sales,1106.15,
+2026-08-29,Corner Hardware,Supplies,-51.46,
+2026-08-30,Card sales deposit,Sales,1378.66,
+2026-09-01,Card sales deposit,Sales,1002.39,
+2026-09-01,Golden Mill Flour Co,Ingredients,-938.77,weekly flour and sugar
+2026-09-01,Maple St Properties,Rent,-4200,monthly rent
+2026-09-02,Card sales deposit,Sales,902.21,
+2026-09-03,Card sales deposit,Sales,1059.58,
+2026-09-03,Valley Dairy,Ingredients,-452.24,weekly dairy
+2026-09-04,Card sales deposit,Sales,1357.93,
+2026-09-04,Payroll,Payroll,-6676.48,"biweekly payroll, 5 staff"
+2026-09-05,Card sales deposit,Sales,1504.3,
+2026-09-05,Corner Hardware,Supplies,-161.08,
+2026-09-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-09-06,Card sales deposit,Sales,1305.94,
+2026-09-08,Card sales deposit,Sales,872.35,
+2026-09-08,City Power and Water,Utilities,-1390,monthly utilities
+2026-09-08,Golden Mill Flour Co,Ingredients,-872.85,weekly flour and sugar
+2026-09-09,Card sales deposit,Sales,954.38,
+2026-09-10,Card sales deposit,Sales,923.06,
+2026-09-10,Valley Dairy,Ingredients,-383.03,weekly dairy
+2026-09-11,Card sales deposit,Sales,1281.45,
+2026-09-12,Bookkeeper Cloud,Software,-60,
+2026-09-12,Card sales deposit,Sales,1431.61,
+2026-09-12,Corner Hardware,Supplies,-150.78,
+2026-09-12,ShiftSlot Scheduling,Software,-129,
+2026-09-12,TillPOS,Software,-89,
+2026-09-13,Card sales deposit,Sales,1292.66,
+2026-09-15,Card sales deposit,Sales,870.16,
+2026-09-15,Golden Mill Flour Co,Ingredients,-836.74,weekly flour and sugar
+2026-09-16,Card sales deposit,Sales,932.82,
+2026-09-17,Card sales deposit,Sales,1034.64,
+2026-09-17,Valley Dairy,Ingredients,-460.75,weekly dairy
+2026-09-18,Card sales deposit,Sales,1286.62,
+2026-09-18,Payroll,Payroll,-6883.78,"biweekly payroll, 5 staff"
+2026-09-19,Card sales deposit,Sales,1163.39,
+2026-09-20,Card processor fees,Fees,-795.65,
+2026-09-20,Card sales deposit,Sales,1322.94,
+2026-09-22,Card sales deposit,Sales,992.96,
+2026-09-22,Golden Mill Flour Co,Ingredients,-913.07,weekly flour and sugar
+2026-09-23,Card sales deposit,Sales,835.43,
+2026-09-24,Card sales deposit,Sales,1070.49,
+2026-09-24,Golden Mill Flour Co,Ingredients,-913.07,weekly flour and sugar
+2026-09-24,Valley Dairy,Ingredients,-383.3,weekly dairy
+2026-09-25,Card sales deposit,Sales,1162.72,
+2026-09-26,Card sales deposit,Sales,1468.15,
+2026-09-26,Corner Hardware,Supplies,-92.07,
+2026-09-27,Card sales deposit,Sales,1184.05,
+2026-09-29,Card sales deposit,Sales,799.76,
+2026-09-29,Golden Mill Flour Co,Ingredients,-952.47,weekly flour and sugar
+2026-09-30,Card sales deposit,Sales,953.62,
+2026-10-01,Card sales deposit,Sales,937.22,
+2026-10-01,Maple St Properties,Rent,-4200,monthly rent
+2026-10-01,Valley Dairy,Ingredients,-387.81,weekly dairy
+2026-10-02,Card sales deposit,Sales,1524.75,
+2026-10-02,Payroll,Payroll,-6672.69,"biweekly payroll, 5 staff"
+2026-10-02,Rapid Oven Repair LLC,Repairs,-2450,emergency oven repair
+2026-10-03,Card sales deposit,Sales,1544.07,
+2026-10-04,Card sales deposit,Sales,1488.55,
+2026-10-05,Eastside Equipment Finance,Loan,-780,oven loan
+2026-10-06,Card sales deposit,Sales,1035.15,
+2026-10-06,Golden Mill Flour Co,Ingredients,-883.15,weekly flour and sugar
+2026-10-07,Card sales deposit,Sales,894.39,
+2026-10-08,Card sales deposit,Sales,1002.79,
+2026-10-08,City Power and Water,Utilities,-625.94,monthly utilities
+2026-10-08,Valley Dairy,Ingredients,-385.35,weekly dairy
+2026-10-09,Card sales deposit,Sales,1339.38,
+2026-10-10,Card sales deposit,Sales,1434.55,
+2026-10-10,Corner Hardware,Supplies,-111.61,
+2026-10-11,Card sales deposit,Sales,1284.08,
+2026-10-12,Bookkeeper Cloud,Software,-60,
+2026-10-12,ShiftSlot Scheduling,Software,-129,
+2026-10-12,TillPOS,Software,-89,
+2026-10-13,Card sales deposit,Sales,948.37,
+2026-10-13,Golden Mill Flour Co,Ingredients,-862.01,weekly flour and sugar

@@ -1,0 +1,22 @@
+# Fallback host: Render free web service (Blueprint). No card needed for the free tier, but it spins down after
+# 15 minutes idle and takes about a minute to wake, so .github/workflows/keepwarm.yml pings it every 10 minutes.
+# Secrets are never in this file: the keys are sync:false, so Render asks for them in the dashboard.
+services:
+  - type: web
+    name: till-nebius
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /agent/status
+    autoDeploy: true
+    envVars:
+      - key: NEBIUS_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: NEBIUS_BASE_URL
+        value: https://api.tokenfactory.nebius.com/v1
+      - key: TILL_AGENT_MODEL
+        value: nvidia/nemotron-3-super-120b-a12b
+      - key: TILL_FAST_MODEL
+        value: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B

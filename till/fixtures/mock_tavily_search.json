@@ -1,0 +1,31 @@
+{
+  "_note": "SAMPLE DATA for the demo when TAVILY_API_KEY is unset. Invented text and example.com links, shaped like the documented Tavily /search response. Not real search results or real prices.",
+  "query": "",
+  "answer": "SAMPLE: Wholesale bakery flour costs are reported up about 8% from last quarter.",
+  "results": [
+    {
+      "title": "SAMPLE: Wholesale flour prices climb into the holiday baking season",
+      "url": "https://example.com/sample/flour-prices-climb",
+      "content": "SAMPLE DATA, not a real article. Distributors say 50 lb bags of all-purpose bakery flour are up 9% since July, after a weak wheat harvest.",
+      "score": 0.91
+    },
+    {
+      "title": "SAMPLE: Small bakeries face higher ingredient bills",
+      "url": "https://example.com/sample/bakery-ingredients",
+      "content": "SAMPLE DATA, not a real article. Owners report flour invoices rose about 7 percent this quarter while sugar held steady.",
+      "score": 0.84
+    },
+    {
+      "title": "SAMPLE: Regional flour mill price list update",
+      "url": "https://example.com/sample/mill-price-list",
+      "content": "SAMPLE DATA, not a real article. The mill's new list shows an 8% increase on bread flour and a 6% increase on pastry flour.",
+      "score": 0.77
+    },
+    {
+      "title": "SAMPLE: Coffee bean futures ease",
+      "url": "https://example.com/sample/coffee",
+      "content": "SAMPLE DATA, not a real article. Green coffee prices fell 4% this month.",
+      "score": 0.41
+    }
+  ]
+}

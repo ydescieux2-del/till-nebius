@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!env.example
+data/*.db
+.DS_Store
+# local-only planning docs
+SUBMISSION_DRAFT.md
+VON_STEPS.md

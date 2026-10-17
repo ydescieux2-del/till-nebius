@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Till on Nemotron</title>
+<style>
+  :root { --navy:#0f2240; --navy2:#1e3a5f; --accent:#2563eb; --bg:#f8fafc; --surface:#f1f5f9;
+          --text:#0f172a; --muted:#475569; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
+               font:15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
+  header { display:flex; align-items:center; justify-content:space-between; padding:16px 28px;
+           background:var(--navy); color:#fff; }
+  header h1 { margin:0; font-size:22px; letter-spacing:.01em; }
+  header h1 small { font-weight:400; font-size:15px; color:#cbd5e1; margin-left:10px; }
+  .status { font-size:13px; color:#cbd5e1; display:flex; gap:14px; }
+  .status b { color:#fff; font-weight:600; }
+  main { display:grid; grid-template-columns: minmax(380px, 1fr) minmax(420px, 1.15fr); gap:22px;
+         padding:22px 28px; height:calc(100% - 64px); }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:14px; display:flex; flex-direction:column;
+           min-height:0; }
+  .panel h2 { margin:0; padding:14px 18px; font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+              color:var(--navy2); border-bottom:1px solid var(--line); }
+  #convo { flex:1; overflow:auto; padding:16px 18px; display:flex; flex-direction:column; gap:12px; }
+  .msg { max-width:88%; padding:10px 14px; border-radius:14px; font-size:15px; }
+  .you { align-self:flex-end; background:var(--accent); color:#fff; border-bottom-right-radius:4px; }
+  .till { align-self:flex-start; background:var(--surface); border-bottom-left-radius:4px; }
+  .trace { align-self:flex-start; font:13px/1.5 ui-monospace, "SF Mono", Menlo, monospace; color:var(--muted);
+           border-left:3px solid var(--accent); padding:2px 10px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; padding:12px 18px 0; }
+  .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 12px; font-size:13px;
+          color:var(--navy2); cursor:pointer; }
+  .chip:hover { border-color:var(--accent); color:var(--accent); }
+  form { display:flex; gap:10px; padding:14px 18px 18px; }
+  input { flex:1; font:inherit; padding:11px 14px; border:1px solid var(--line); border-radius:10px; }
+  button.mic { width:48px; border:0; border-radius:10px; background:var(--accent); color:#fff; font-size:20px; cursor:pointer; }
+  button.mic.on { background:#b91c1c; }
+  button.send { border:0; border-radius:10px; background:var(--navy); color:#fff; padding:0 18px; font:inherit; cursor:pointer; }
+  #cards { flex:1; overflow:auto; padding:16px 18px; display:flex; flex-direction:column; gap:14px; }
+  #cards iframe { flex-shrink:0; width:100%; border:1px solid var(--line); border-radius:12px; background:#fff; height:240px; }
+  .hint { color:var(--muted); font-size:14px; }
+  .mode { font-size:13px; color:var(--muted); padding:0 18px; }
+  @media (max-width: 900px) {
+    header { flex-direction:column; align-items:flex-start; gap:6px; padding:14px 16px; }
+    header h1 small { display:block; margin:2px 0 0; }
+    .status { flex-wrap:wrap; gap:4px 12px; }
+    main { grid-template-columns:1fr; height:auto; padding:16px; }
+    .panel { min-height:420px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Till <small>can you still make payroll?</small></h1>
+  <div class="status"><span>MCP <b id="proto">connecting…</b></span><span>tools <b id="ntools">0</b></span>
+    <span>agent <b id="agent">…</b></span><span>Tavily <b id="tavily">…</b></span><span>business <b>Sunrise Bakery, Highland Park (demo books)</b></span></div>
+</header>
+<main>
+  <section class="panel">
+    <h2>Conversation</h2>
+    <div id="convo"><div class="hint">Tap the mic or pick a question. Try: "Flour went up. Can I still make payroll in three weeks?"</div></div>
+    <div class="chips" id="chips"></div>
+    <div class="mode" id="mode"></div>
+    <form id="ask">
+      <button type="button" class="mic" id="mic" title="Speak">🎙</button>
+      <input id="q" placeholder="Ask Till about your money…" autocomplete="off">
+      <button class="send">Ask</button>
+    </form>
+  </section>
+  <section class="panel">
+    <h2>Cards (MCP Apps, rendered from ui://till/card.html)</h2>
+    <div id="cards"></div>
+  </section>
+</main>
+<script>
+// ---------------------------------------------------------------- MCP client over Streamable HTTP
+const MCP_URL = "/mcp";
+const BUSINESS = "demo";
+let rpcId = 0, session = null, protocol = null, tools = [], cardHtml = "";
+
+async function rpc(method, params = {}, notify = false) {
+  const msg = { jsonrpc: "2.0", method, params };
+  if (!notify) msg.id = ++rpcId;
+  const headers = { "content-type": "application/json", "accept": "application/json, text/event-stream" };
+  if (session) headers["mcp-session-id"] = session;
+  if (protocol) headers["mcp-protocol-version"] = protocol;
+  const r = await fetch(MCP_URL, { method: "POST", headers, body: JSON.stringify(msg) });
+  if (r.headers.get("mcp-session-id")) session = r.headers.get("mcp-session-id");
+  if (notify) return null;
+  const body = await r.json();
+  if (body.error) throw new Error(body.error.message);
+  return body.result;
+}
+
+async function connect() {
+  const init = await rpc("initialize", {
+    protocolVersion: "2025-11-25",
+    capabilities: { extensions: { "io.modelcontextprotocol/ui": { mimeTypes: ["text/html;profile=mcp-app"] } } },
+    clientInfo: { name: "till-voice-demo", version: "0.1.0" },
+  });
+  protocol = init.protocolVersion;
+  await rpc("notifications/initialized", {}, true);
+  tools = (await rpc("tools/list")).tools;
+  cardHtml = (await rpc("resources/read", { uri: "ui://till/card.html" })).contents[0].text;
+  document.getElementById("proto").textContent = protocol;
+  document.getElementById("ntools").textContent = tools.length;
+}
+
+async function callTool(name, args) {
+  const t0 = performance.now();
+  const res = await rpc("tools/call", { name, arguments: { business: BUSINESS, ...args } });
+  trace(`tools/call ${name}(${JSON.stringify(args)})  ${Math.round(performance.now() - t0)} ms`);
+  if (!res.isError) showCard(res);
+  return res;
+}
+
+// ---------------------------------------------------------------- MCP Apps host (one iframe per result)
+function showCard(result) {
+  const f = document.createElement("iframe");
+  f.setAttribute("sandbox", "allow-scripts");
+  f.srcdoc = cardHtml;
+  const box = document.getElementById("cards");
+  box.prepend(f);
+  window.addEventListener("message", function onMsg(ev) {
+    if (ev.source !== f.contentWindow) return;
+    const m = ev.data || {};
+    if (m.method === "ui/initialize") {
+      f.contentWindow.postMessage({ jsonrpc: "2.0", id: m.id, result: {
+        protocolVersion: m.params.protocolVersion, hostInfo: { name: "till-voice-demo", version: "0.1.0" },
+        hostCapabilities: {}, hostContext: { theme: "light", displayMode: "inline" } } }, "*");
+    } else if (m.method === "ui/notifications/initialized") {
+      f.contentWindow.postMessage({ jsonrpc: "2.0", method: "ui/notifications/tool-result", params: result }, "*");
+    } else if (m.method === "ui/notifications/size-changed") {
+      f.style.height = Math.min(Math.max(m.params.height + 4, 140), 900) + "px";
+    }
+  });
+}
+
+// ---------------------------------------------------------------- conversation + voice
+const convo = document.getElementById("convo");
+function add(cls, text) {
+  const hint = convo.querySelector(".hint"); if (hint) hint.remove();
+  const d = document.createElement("div"); d.className = cls; d.textContent = text;
+  convo.appendChild(d); convo.scrollTop = convo.scrollHeight; return d;
+}
+const trace = t => add("trace", t);
+
+let useTTS = false, audio = null;
+function stopSpeaking() {
+  if (audio) { audio.pause(); audio = null; }
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+}
+function browserSpeak(text) {
+  if (!("speechSynthesis" in window)) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.04;
+  speechSynthesis.speak(u);
+}
+async function speak(text) {
+  stopSpeaking();
+  if (!useTTS) return browserSpeak(text);
+  try {
+    const r = await fetch("/agent/tts", { method: "POST", headers: { "content-type": "application/json" },
+                                          body: JSON.stringify({ text }) });
+    if (!r.ok) throw new Error(r.status);
+    audio = new Audio(URL.createObjectURL(await r.blob()));
+    await audio.play();
+  } catch { browserSpeak(text); }
+}
+
+const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+const mic = document.getElementById("mic");
+if (!Rec) mic.style.display = "none";
+mic.onclick = () => {
+  const rec = new Rec(); rec.lang = "en-US"; rec.interimResults = false;
+  mic.classList.add("on"); stopSpeaking();
+  rec.onresult = e => ask(e.results[0][0].transcript);
+  rec.onend = () => mic.classList.remove("on");
+  rec.start();
+};
+
+document.getElementById("ask").onsubmit = e => {
+  e.preventDefault();
+  const q = document.getElementById("q"); if (q.value.trim()) ask(q.value.trim()); q.value = "";
+};
+
+const CHIPS = ["Flour went up. Can I still make payroll in three weeks?", "Give me my morning brief",
+               "Any weird charges?", "Mark the flour charge as a dispute",
+               "My dairy supplier says prices are up 12 percent. Are we OK for the next four weeks?",
+               "Can I afford a part-time baker at $1,800 a month?", "What changed in spending last month?",
+               "Warn me if cash drops under 12 thousand"];
+for (const c of CHIPS) {
+  const b = document.createElement("button"); b.className = "chip"; b.textContent = c; b.onclick = () => ask(c);
+  document.getElementById("chips").appendChild(b);
+}
+
+let busy = false;
+const history = [];
+async function ask(text) {
+  if (busy) return; busy = true;
+  add("msg you", text);
+  try {
+    const reply = await agentTurn(text);
+    add("msg till", reply); speak(reply);
+  } catch (err) {
+    add("msg till", "Sorry, something went wrong: " + err.message);
+  } finally { busy = false; }
+}
+
+// ---------------------------------------------------------------- agent: Nemotron picks and chains tools
+// The server forwards each step to NVIDIA Nemotron on Nebius Token Factory (OpenAI-compatible tool calling),
+// or to a labeled mock planner when no NEBIUS_API_KEY is set. This page runs every tool call itself over MCP.
+const SYSTEM = `You are Till, a voice CFO for a small bakery (Sunrise Bakery, Highland Park, Los Angeles). You are speaking out loud.
+When the owner says a supplier price changed or asks whether they can still make payroll, call market_check with the item (for example flour); it searches today's prices with Tavily and runs the cash forecast with payroll. Only pass pct_change when the owner states the number.
+Use the tools for every number; never estimate. You may call several tools in a row when a question needs it
+(for example check unusual_charges to get an id before review_charge, or a forecast before advising).
+Reply in at most two short spoken sentences, 45 words total, no lists, no markdown. Lead with the one thing that matters most, then offer one follow-up.
+The first paragraph of each tool result is already written for the ear; reuse it when it answers the question.
+You are not a licensed advisor; do not give tax or investment advice.`;
+
+async function agentTurn(text) {
+  const mcpTools = tools.map(t => ({ name: t.name, description: t.description, inputSchema: t.inputSchema }));
+  history.push({ role: "user", content: text });
+  let lastSpeech = "";
+  for (let step = 0; step < 6; step++) {
+    const r = await fetch("/agent/llm", { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ system: SYSTEM, messages: history, tools: mcpTools }) });
+    const out = await r.json();
+    if (!r.ok) throw new Error(out.error || r.status);
+    const msg = out.message;
+    history.push(msg);
+    const calls = msg.tool_calls || [];
+    trace(`${out.mock ? "mock planner" : out.model}: ${calls.length ? calls.map(c => c.function.name).join(", ") : "answer"}`);
+    if (!calls.length) {
+      const said = (msg.content || "").trim();
+      // An empty or cut-off reply falls back to the tool's own sentence, which is written for the ear.
+      const complete = said && out.finish_reason === "stop" && /[.?!]["')]?$/.test(said);
+      return complete ? said : (lastSpeech || said || "Sorry, I didn't catch that.");
+    }
+    for (const c of calls) {
+      let args = {};
+      try { args = JSON.parse(c.function.arguments || "{}"); } catch { args = {}; }
+      const res = await callTool(c.function.name, args);
+      if (!res.isError && res.content[0]) lastSpeech = res.content[0].text;
+      history.push({ role: "tool", tool_call_id: c.id, name: c.function.name,
+                     content: (res.isError ? "ERROR: " : "") + res.content.map(x => x.text).join("\n\n") });
+    }
+  }
+  return "I ran out of steps on that one. Try asking a narrower question.";
+}
+
+// ---------------------------------------------------------------- boot
+(async () => {
+  try { await connect(); } catch (e) { document.getElementById("proto").textContent = "offline"; return; }
+  try {
+    const s = await (await fetch("/agent/status")).json();
+    useTTS = s.tts && !new URLSearchParams(location.search).has("browservoice");
+    document.getElementById("agent").textContent = s.llm.live ? s.llm.model : "mock planner (no Nebius key)";
+    document.getElementById("tavily").textContent = s.tavily.live ? "live" : "sample data until key is set";
+    document.getElementById("mode").textContent = s.llm.live
+      ? `NVIDIA Nemotron on Nebius Token Factory chooses and chains the tools (${s.llm.model}, follow-ups on ${s.llm.fast_model}). Every number comes from the MCP server.`
+      : "MOCK: no NEBIUS_API_KEY set, so a deterministic planner stands in for Nemotron. Every number still comes from the MCP server.";
+  } catch { document.getElementById("agent").textContent = "status unavailable"; }
+})();
+</script>
+</body>
+</html>

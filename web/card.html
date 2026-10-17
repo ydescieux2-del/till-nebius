@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Till card</title>
+<style>
+  :root { --navy:#0f2240; --navy2:#1e3a5f; --accent:#2563eb; --surface:#f1f5f9; --text:#0f172a; --muted:#475569;
+          --ok:#15803d; --warn:#b45309; --bad:#b91c1c; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:#fff; color:var(--text);
+               font:15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
+  .card { padding:20px 22px; }
+  .head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .title { font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--navy2); }
+  .asof { font-size:13px; color:var(--muted); }
+  .big { font-size:40px; font-weight:700; color:var(--navy); line-height:1.15; margin-top:6px; }
+  .big.ok { color:var(--ok); } .big.warn { color:var(--warn); } .big.bad { color:var(--bad); }
+  .biglabel { font-size:14px; color:var(--muted); }
+  svg { display:block; width:100%; height:96px; margin:14px 0 4px; }
+  .rows { margin-top:12px; border-top:1px solid #e2e8f0; }
+  .row { display:flex; justify-content:space-between; gap:16px; padding:7px 0; border-bottom:1px solid #e2e8f0; font-size:14px; }
+  .row .v { font-weight:600; font-variant-numeric:tabular-nums; text-align:right; }
+  .row.bad .v { color:var(--bad); } .row.ok .v { color:var(--ok); } .row.warn .v { color:var(--warn); }
+  .items { margin-top:12px; display:grid; gap:8px; }
+  .item { background:var(--surface); border-left:4px solid var(--accent); border-radius:8px; padding:10px 12px; }
+  .item.warn { border-color:var(--warn); } .item.ok { border-color:var(--ok); } .item.bad { border-color:var(--bad); }
+  .item b { display:block; font-size:14px; }
+  .item span { font-size:14px; color:var(--muted); }
+  .item code { font-size:13px; color:var(--muted); }
+  .empty { color:var(--muted); font-size:14px; }
+  .badge { display:inline-block; margin-top:8px; font-size:13px; font-weight:600; padding:3px 10px; border-radius:999px;
+           background:#fef3c7; color:var(--warn); border:1px solid #fcd34d; }
+  .badge.ok { background:#dcfce7; color:var(--ok); border-color:#86efac; }
+  .bars { margin-top:14px; display:grid; gap:9px; }
+  .bar { display:grid; grid-template-columns:minmax(120px, 38%) 1fr auto; align-items:center; gap:10px; font-size:14px; }
+  .bar .track { display:block; height:10px; background:var(--surface); border-radius:999px; overflow:hidden; }
+  .bar .fill { display:block; height:100%; background:var(--accent); border-radius:999px; }
+  .bar .n { font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; min-width:64px; text-align:right; }
+</style>
+</head>
+<body>
+<div class="card" id="root"><div class="empty">Waiting for Till…</div></div>
+<script>
+// MCP Apps view (io.modelcontextprotocol/ui). Talks JSON-RPC to the host over postMessage.
+let nextId = 1;
+const pending = {};
+function send(msg) { window.parent.postMessage({ jsonrpc: "2.0", ...msg }, "*"); }
+function request(method, params) {
+  const id = nextId++;
+  send({ id, method, params });
+  return new Promise(res => (pending[id] = res));
+}
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function chart(values, floor) {
+  if (!values || !values.length) return "";
+  const W = 600, H = 96, pad = 6;
+  const all = floor != null ? values.concat([floor]) : values;
+  const lo = Math.min(...all) * 0.95, hi = Math.max(...all) * 1.02;
+  const x = i => pad + (i * (W - 2 * pad)) / Math.max(1, values.length - 1);
+  const y = v => H - pad - ((v - lo) * (H - 2 * pad)) / (hi - lo || 1);
+  const pts = values.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const minI = values.indexOf(Math.min(...values));
+  const fl = floor != null
+    ? `<line x1="0" x2="${W}" y1="${y(floor)}" y2="${y(floor)}" stroke="#b91c1c" stroke-dasharray="6 5" stroke-width="1.5"/>`
+    : "";
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="cash forecast">
+    ${fl}<polyline points="${pts}" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="${x(minI)}" cy="${y(values[minI])}" r="5" fill="#0f2240"/></svg>`;
+}
+
+function render(card) {
+  if (!card) return;
+  const rows = (card.rows || []).map(r =>
+    `<div class="row ${esc(r.tone || "")}"><span>${esc(r.label)}</span><span class="v">${esc(r.value)}</span></div>`).join("");
+  const items = (card.items || []).map(it =>
+    `<div class="item ${esc(it.tone || "")}"><b>${esc(it.title)}</b><span>${esc(it.detail)}</span>
+     ${it.id ? `<br><code>id ${esc(it.id)}</code>` : ""}</div>`).join("");
+  const bars = (card.bars || []).map(b =>
+    `<div class="bar"><span>${esc(b.label)}</span><span class="track"><span class="fill" style="width:${Math.round(Math.max(0, Math.min(1, +b.value || 0)) * 100)}%"></span></span><span class="n">${esc(b.note ?? "")}</span></div>`).join("");
+  const badge = card.badge ? `<div class="badge ${esc(card.badge.tone || "")}">${esc(card.badge.text)}</div>` : "";
+  document.getElementById("root").innerHTML = `
+    <div class="head"><div class="title">${esc(card.title)}</div><div class="asof">${card.as_of ? "as of " + esc(card.as_of) : ""}</div></div>
+    ${card.big ? `<div class="big ${esc(card.big_tone || "")}">${esc(card.big)}</div>` : ""}
+    ${card.big_label ? `<div class="biglabel">${esc(card.big_label)}</div>` : ""}
+    ${badge}
+    ${bars ? `<div class="bars">${bars}</div>` : ""}
+    ${chart(card.chart, card.chart_floor)}
+    ${rows ? `<div class="rows">${rows}</div>` : ""}
+    ${items ? `<div class="items">${items}</div>` : ""}`;
+  send({ method: "ui/notifications/size-changed", params: { height: document.documentElement.scrollHeight } });
+}
+
+window.addEventListener("message", ev => {
+  const m = ev.data;
+  if (!m || m.jsonrpc !== "2.0") return;
+  if (m.id != null && pending[m.id]) { pending[m.id](m.result); delete pending[m.id]; return; }
+  if (m.method === "ui/notifications/tool-result") render((m.params || {}).structuredContent?.card);
+});
+
+request("ui/initialize", {
+  protocolVersion: "2026-01-26",
+  appInfo: { name: "till-card", version: "0.1.0" },
+  appCapabilities: {}
+}).then(() => send({ method: "ui/notifications/initialized", params: {} }));
+</script>
+</body>
+</html>
