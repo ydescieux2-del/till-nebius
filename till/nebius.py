@@ -90,7 +90,10 @@ def chat(messages: list[dict], tools: list[dict] | None = None, system: str = ""
     if not is_live():
         return _mock(msgs, tools or [])
     use = fast_model() if _is_followup(messages) else model()
-    payload = {"model": use, "messages": msgs, "max_tokens": 1024, "temperature": 0.2}
+    # Nemotron reasons before it answers, and the reasoning counts toward max_tokens. At 1024, Nano's reasoning after
+    # a long tool result often used it all and the reply came back empty (finish_reason "length"). Turning reasoning
+    # off fixed that but stopped Nano chaining the next tool the owner asked for, so it keeps reasoning, with room.
+    payload = {"model": use, "messages": msgs, "max_tokens": 4096, "temperature": 0.2}
     if tools:
         payload["tools"] = tools
         payload["tool_choice"] = "auto"

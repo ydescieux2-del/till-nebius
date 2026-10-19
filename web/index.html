@@ -54,7 +54,7 @@
 <header>
   <h1>Till <small>can you still make payroll?</small></h1>
   <div class="status"><span>MCP <b id="proto">connecting…</b></span><span>tools <b id="ntools">0</b></span>
-    <span>agent <b id="agent">…</b></span><span>Tavily <b id="tavily">…</b></span><span>business <b>Sunrise Bakery, Highland Park (demo books)</b></span></div>
+    <span>agent <b id="agent">…</b></span><span>Tavily <b id="tavily">…</b></span><span>business <b>Sunrise Bakery, Highland Park (demo books as of Oct 13, 2026)</b></span></div>
 </header>
 <main>
   <section class="panel">
@@ -219,8 +219,15 @@ Reply in at most two short spoken sentences, 45 words total, no lists, no markdo
 The first paragraph of each tool result is already written for the ear; reuse it when it answers the question.
 You are not a licensed advisor; do not give tax or investment advice.`;
 
+// Tools that change what Till remembers. They are offered to the model only when the owner's own words state a
+// decision; in testing, a plain "morning brief" occasionally chained review_charge and saved a dispute nobody asked for.
+const WRITE_TOOLS = new Set(["review_charge", "set_cash_alert", "import_books", "forget_business"]);
+const DECISION_WORDS = /\b(dispute|disputed|mark|ignore|approve|expected|legit|fine|okay|ok|alert|warn|remind|minimum|import|load|upload|forget|clear|reset|delete)\b/i;
+
 async function agentTurn(text) {
-  const mcpTools = tools.map(t => ({ name: t.name, description: t.description, inputSchema: t.inputSchema }));
+  const mayWrite = DECISION_WORDS.test(text);
+  const mcpTools = tools.filter(t => mayWrite || !WRITE_TOOLS.has(t.name))
+    .map(t => ({ name: t.name, description: t.description, inputSchema: t.inputSchema }));
   history.push({ role: "user", content: text });
   let lastSpeech = "";
   for (let step = 0; step < 6; step++) {
@@ -234,9 +241,16 @@ async function agentTurn(text) {
     trace(`${out.mock ? "mock planner" : out.model}: ${calls.length ? calls.map(c => c.function.name).join(", ") : "answer"}`);
     if (!calls.length) {
       const said = (msg.content || "").trim();
-      // An empty or cut-off reply falls back to the tool's own sentence, which is written for the ear.
+      // After a tool ran, the facts are spoken from the tool's own sentence (the deterministic engine, written for
+      // the ear): in testing, both Nemotron sizes sometimes flipped "under your cash alert" to "above" when
+      // paraphrasing. Nemotron still picks the tools and adds its follow-up question.
+      if (lastSpeech) {
+        const ask = (said.match(/[^.?!]*\?/g) || []).pop();
+        return ask ? `${lastSpeech} ${ask.trim()}` : lastSpeech;
+      }
+      // No tool ran: an empty or cut-off reply gets a polite fallback.
       const complete = said && out.finish_reason === "stop" && /[.?!]["')]?$/.test(said);
-      return complete ? said : (lastSpeech || said || "Sorry, I didn't catch that.");
+      return complete ? said : (said || "Sorry, I didn't catch that.");
     }
     for (const c of calls) {
       let args = {};

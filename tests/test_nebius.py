@@ -165,6 +165,7 @@ def test_live_request_shape_and_model_routing():
     assert a["json"]["model"].startswith("nvidia/") and "nemotron" in a["json"]["model"].lower()
     assert a["json"]["messages"][0] == {"role": "system", "content": SYSTEM}
     assert a["json"]["tools"] == tools and a["json"]["tool_choice"] == "auto"
+    assert a["json"]["max_tokens"] == b["json"]["max_tokens"] == 4096           # room for reasoning plus the reply
     assert first["mock"] is False and first["message"]["content"] == ""          # <think> stripped
     assert first["message"]["tool_calls"][0]["function"]["name"] == "market_check"
 
