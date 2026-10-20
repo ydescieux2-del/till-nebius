@@ -113,9 +113,11 @@ def main(out_mp4):
                 page.type("#q", shown, delay=max(15, int(d * 1000 * 0.85 / len(shown))))
                 time.sleep(0.3)
                 page.click("button.send")
+                sent = now()
                 answers += 1
                 page.wait_for_function(f"document.querySelectorAll('.msg.till').length >= {answers}", timeout=90000)
                 appeared = now()
+                print(f"          answer on screen {appeared - sent:.1f}s after Ask")
                 reply = page.locator(".msg.till").nth(answers - 1).inner_text()
                 f = tmp / f"a{i}.mp3"
                 d = tts(reply, TILL, f, model="eleven_flash_v2_5")

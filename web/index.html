@@ -201,8 +201,14 @@ async function ask(text) {
   if (busy) return; busy = true;
   add("msg you", text);
   try {
-    const reply = await agentTurn(text);
-    add("msg till", reply); speak(reply);
+    // The facts are shown and spoken as soon as a tool returns (about 2 seconds); Nemotron's follow-up question
+    // is added to the same bubble when it arrives, without cutting the speech off.
+    let bubble = null;
+    const reply = await agentTurn(text, facts => {
+      if (bubble) bubble.textContent = facts; else bubble = add("msg till", facts);
+      speak(facts);
+    });
+    if (bubble) bubble.textContent = reply; else { add("msg till", reply); speak(reply); }
   } catch (err) {
     add("msg till", "Sorry, something went wrong: " + err.message);
   } finally { busy = false; }
@@ -224,7 +230,7 @@ You are not a licensed advisor; do not give tax or investment advice.`;
 const WRITE_TOOLS = new Set(["review_charge", "set_cash_alert", "import_books", "forget_business"]);
 const DECISION_WORDS = /\b(dispute|disputed|mark|ignore|approve|expected|legit|fine|okay|ok|alert|warn|remind|minimum|import|load|upload|forget|clear|reset|delete)\b/i;
 
-async function agentTurn(text) {
+async function agentTurn(text, onFacts) {
   const mayWrite = DECISION_WORDS.test(text);
   const mcpTools = tools.filter(t => mayWrite || !WRITE_TOOLS.has(t.name))
     .map(t => ({ name: t.name, description: t.description, inputSchema: t.inputSchema }));
@@ -256,7 +262,7 @@ async function agentTurn(text) {
       let args = {};
       try { args = JSON.parse(c.function.arguments || "{}"); } catch { args = {}; }
       const res = await callTool(c.function.name, args);
-      if (!res.isError && res.content[0]) lastSpeech = res.content[0].text;
+      if (!res.isError && res.content[0]) { lastSpeech = res.content[0].text; onFacts && onFacts(lastSpeech); }
       history.push({ role: "tool", tool_call_id: c.id, name: c.function.name,
                      content: (res.isError ? "ERROR: " : "") + res.content.map(x => x.text).join("\n\n") });
     }
