@@ -74,8 +74,13 @@ def main():
         second = call("morning_brief")
         assert "since your last brief" in second["content"][0]["text"] or "3 charges" in second["content"][0]["text"]
         market = call("market_check", item="flour", weeks=3)
-        assert market["structuredContent"]["shock"]["verdict"] in ("comfortable", "tight", "not yet")
+        if "shock" in market["structuredContent"]:
+            assert market["structuredContent"]["shock"]["verdict"] in ("comfortable", "tight", "not yet")
+        else:   # live Tavily found no clear percent that day: Till must say so, never guess
+            assert "won't guess" in market["content"][0]["text"], market["content"][0]["text"]
         assert market["structuredContent"]["card"]["kind"] == "market"
+        stated = call("market_check", item="flour", weeks=3, pct_change=12)   # owner-stated: always computed
+        assert stated["structuredContent"]["shock"]["verdict"] in ("comfortable", "tight", "not yet")
 
         # The agent loop exactly as the page runs it: /agent/llm (Nemotron, or the labeled mock) plans, the
         # client runs each tool call over /mcp, and the tool result goes back as an OpenAI tool message.
